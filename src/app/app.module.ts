@@ -1,17 +1,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
+import { SharedModule } from "./shared/shared.module";
 import { AppComponent } from "./app.component";
-import { CardComponent } from "./card.component";
 
 @NgModule({
-    declarations: [AppComponent, CardComponent],
+    declarations: [AppComponent],
     imports: [
         BrowserModule,
-        HttpModule
-    ],
-    entryComponents: [
-        CardComponent
+        HttpModule,
+        SharedModule
     ],
     bootstrap: [AppComponent]
 })

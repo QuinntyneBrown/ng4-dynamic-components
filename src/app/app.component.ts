@@ -1,14 +1,17 @@
-import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef, AfterViewInit } from "@angular/core";
-import { CardComponent } from "./card.component";
+import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef, AfterViewInit, Injector } from "@angular/core";
+import { CardComponent } from "./shared/card.component";
 
 @Component({
-    template: require("./app.component.html"),
-    styles: [require("./app.component.scss")],
+    templateUrl: "./app.component.html",
+    styleUrls: ["./app.component.css"],
     selector: "ce-app"
 })
 export class AppComponent implements AfterViewInit {
     
-    constructor(private _componentFactoryResolver: ComponentFactoryResolver) {
+    constructor(
+        private _componentFactoryResolver: ComponentFactoryResolver,
+        private _injector: Injector
+    ) {
         
     }
 
@@ -18,6 +21,11 @@ export class AppComponent implements AfterViewInit {
     public ngAfterViewInit() {
         const componentFactory = this._componentFactoryResolver.resolveComponentFactory(CardComponent);
 
-        this.target.createComponent(componentFactory);
+        var cardComponentRef = this.target.createComponent(componentFactory, null, this._injector);
+
+        cardComponentRef.instance.value = 10;
+
+        setTimeout(() => cardComponentRef.destroy(), 10000);
+        
     }
 }

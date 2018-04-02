@@ -3,9 +3,8 @@ const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
 module.exports = {
-    devtool: 'source-map',
     entry: {
-        'vendor': ['./src/polyfills', './src/vendor'],
+        'vendor': ['./src/polyfills'],
         'app': './src/main'
     },
     output: {
@@ -14,18 +13,34 @@ module.exports = {
         publicPath: "dist/"
     },
     resolve: {
-        extensions: ['.ts', '.js', '.jpg', '.jpeg', '.gif', '.png', '.css', '.html']
+        extensions: ['.ts', '.css', '.html', '.js']
     },
     module: {
         loaders: [
-            { test: /\.scss$/, exclude: /node_modules/, loaders: ['raw-loader', 'sass-loader'] },
-            { test: /\.(jpg|jpeg|gif|png)$/, loader: 'file-loader?name=img/[path][name].[ext]' },
-            { test: /\.(eof|woff|woff2|svg)$/, loader: 'file-loader?name=img/[path][name].[ext]' },
+            {
+                test: /\.ts$/,
+                use: [{
+                    loader: 'awesome-typescript-loader'
+                },
+                {
+                    loader: 'angular2-template-loader'
+                }]
+            },
             { test: /\.css$/, loader: 'raw-loader' },
             { test: /\.html$/, loaders: ['html-loader'] },
-            { test: /\.ts$/, loaders: ['awesome-typescript-loader'], exclude: /node_modules/ }
         ]
     },
     plugins: [
+        //new UglifyJsPlugin({
+        //    beautify: false,
+        //    comments: false,
+        //    mangle: {
+        //        screw_ie8: true,
+        //        keep_fnames: true
+        //    },
+        //    compress: {
+        //        screw_ie8: true
+        //    }
+        //})
     ]
 };
